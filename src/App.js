@@ -56,6 +56,13 @@ const App = () => {
     const name = event.target.name.value;
     const bagTag = parseInt(event.target.bagTag.value, 10); // parse bagTag as integer
   
+    // Check if the name or bagTag fields are empty
+    if (!name || !bagTag) {
+      // If either field is empty, display an error message and return early
+      console.error('Name and bag tag fields cannot be empty');
+      return;
+    }
+  
     try {
       const newPlayer = { name, bagTag };
       const updatedPlayers = updateRankings(players, newPlayer, 0);
@@ -67,7 +74,6 @@ const App = () => {
       console.error(error);
     }
   };
-  
   
 
   return (

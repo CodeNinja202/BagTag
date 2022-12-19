@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RankingTable = ({players, onRoundSubmit}) => {
+const RankingTable = ({players, onRoundSubmit, onDeletePlayer, onEditPlayer}) => {
   return (
     <table>
       <thead>
@@ -21,6 +21,9 @@ const RankingTable = ({players, onRoundSubmit}) => {
                 <input type="number" id="bagTag" name="bagTag" />
                 <button type="submit">Submit Round</button>
               </form>
+              {/* Add delete and edit buttons */}
+              <button onClick={() => onDeletePlayer(player)}>Delete</button>
+              <button onClick={() => onEditPlayer(player)}>Edit</button>
             </td>
           </tr>
         ))}
@@ -30,6 +33,7 @@ const RankingTable = ({players, onRoundSubmit}) => {
 };
 
 export default RankingTable;
+
 
 
 
