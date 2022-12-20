@@ -1,7 +1,7 @@
 const { client } = require("./client");
 
 const {
-  updatePassword,
+
   createUser,
   getAllUsers,
   getUserByUsername,
@@ -9,7 +9,11 @@ const {
   getUserById,
 } = require("./users");
 
-// const { deleteProduct, updateProduct, createProduct, getAllProducts, getProductById } = require("./products");
+const { deleteTag,
+  createNewStandings,
+  getBagTagPlayerById,
+  updateBagRanking,
+  getAllBagTagRankings } = require("./bagtags");
 //DROP TABLE
 async function dropTables() {
   try {
@@ -33,7 +37,7 @@ async function createTables() {
     await client.query(`
       CREATE TABLE players (
         id SERIAL PRIMARY KEY,
-        title VARCHAR(255),
+        name VARCHAR(255),
         "bagTag" INTEGER
       );
 
@@ -52,30 +56,30 @@ async function createTables() {
     console.log("error creating tables", ex);
   }
 }
-//CREATE INITIAL PRODUCTS
-// async function createInitialTags() {
-//   try {
-//     console.log("Creating Products");
-//     await createTagRanking({
-//       title: "User 1",
-//       description: "Working for 20 years....",
-//     });
+// CREATE INITIAL tag ranking board
+async function createInitialTags() {
+  try {
+    console.log("Creating tags");
+    await createNewStandings({
+      name: "User One",
+      bagTag: 1,
+    });
 
-//     await createProduct({
-//       title: "User 2",
-//       description: "Working for 10 years....",
-//     });
+    await createNewStandings({
+      name: "User Two",
+      bagTag: 2,
+    });
 
-//     await createProduct({
-//       title: "User 3",
-//       description: "Working for 25 years....",
-//     });
+    await createNewStandings({
+      name: "User Three",
+      bagTag: 3,
+    });
 
-//     console.log("Finished creating Products");
-//   } catch (ex) {
-//     console.log("error creating Products", ex);
-//   }
-// }
+    console.log("Finished creating Tags",);
+  } catch (ex) {
+    console.log("error creating Tags", ex);
+  }
+}
 
 async function createInitialUsers() {
   console.log("Starting to create users...");
@@ -211,7 +215,7 @@ async function buildDB() {
     await dropTables();
     await createTables();
     await createInitialUsers();
-    // await createInitialTags();
+    await createInitialTags();
   } catch (ex) {
     console.log("Error building the DB", ex);
     throw ex;
