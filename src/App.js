@@ -63,6 +63,12 @@ const App = () => {
       return;
     }
   
+    // Check if the player's name already exists in the list of players
+    if (players.some(player => player.name === name)) {
+      console.error(`Player with name '${name}' already exists`);
+      return;
+    }
+  
     try {
       const newPlayer = { name, bagTag };
       const updatedPlayers = updateRankings(players, newPlayer, 0);
@@ -74,6 +80,7 @@ const App = () => {
       console.error(error);
     }
   };
+  
 
  
   

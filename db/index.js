@@ -1,5 +1,5 @@
 module.exports = {
-    ...require('./bagTags'),
+    ...require('./bagtags'),
     ...require('./users'),
     ...require('./client'),
   
