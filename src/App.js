@@ -74,11 +74,34 @@ const App = () => {
       console.error(error);
     }
   };
+
+ 
   
+  const onDeletePlayer = player => {
+    // Delete the player from the players array
+    const updatedPlayers = players.filter(p => p.name !== player.name);
+    setPlayers(updatedPlayers);
+  };
+  
+  const onEditPlayer = (event, player) => {
+    event.preventDefault();
+    const name = event.target.name.value; // new player name
+    const bagTag = player.bagTag; // keep the same bag tag
+    const updatedPlayer = { name, bagTag };
+  
+    // Update the player's name and bag tag in the players array
+    const updatedPlayers = players.map(p => {
+      if (p.name === player.name) {
+        return updatedPlayer;
+      }
+      return p;
+    });
+    setPlayers(updatedPlayers);
+  };
 
   return (
     <div>
-      <RankingTable players={players} onRoundSubmit={onRoundSubmit} />
+      <RankingTable players={players} onRoundSubmit={onRoundSubmit} onDeletePlayer={onDeletePlayer} onEditPlayer={onEditPlayer} />
       <form ref={formRef} onSubmit={event => onAddPlayer(event, formRef)}>
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" name="name" />
