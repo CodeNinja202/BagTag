@@ -6,14 +6,17 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer, onEditPlayer}) =>
   const [searchTerm, setSearchTerm] = useState('');
 
 
-  const playerTagMatches = (tag, string) => {
-    const { name, bagTag   } = tag;
-    name.toLowerCase();
-   
-    if ((name.toLowerCase().includes(string)) || bagTag.toLowerCase().includes(string)) {
-        return tag;
+  const playerTagMatches = (tag, searchTerm) => {
+    const { name, bagTag } = tag;  
+    const searchTerms = searchTerm.toLowerCase().split(" ");
+  
+    if (
+      searchTerms.every((term) => name.toLowerCase().includes(term)) ||
+      searchTerms.every((term) => bagTag.toLowerCase().includes(term))
+    ) {
+      return tag;
     }
-}
+  };
 const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
 const tagsToDisplay = searchTerm.length ? filteredTag : players;
 
