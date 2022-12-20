@@ -62,6 +62,10 @@ const App = () => {
       console.error(`Player with name '${name}' already exists`);
       return;
     }
+    if (players.some((player) => player.bagTag === bagTag)) {
+      console.error(`Player with name '${bagTag}' already exists`);
+      return;
+    }
   
     try {
       const newPlayer = { name, bagTag };
