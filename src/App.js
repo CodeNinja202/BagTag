@@ -6,6 +6,9 @@ const baseURL = 'http://localhost:3001/api'
 const App = () => {
   const formRef = useRef(null);
   const [players, setPlayers] = useState([]);
+ 
+
+
   const updateRankings = (players, player, bagTag) => {
     // Make a copy of the players array so we don't modify the original
     const updatedPlayers = [...players];
@@ -117,6 +120,8 @@ const App = () => {
 
 
 
+
+//USE EFFECT START
   useEffect(() => {
     fetchAllTagPLayers();
   }, []);

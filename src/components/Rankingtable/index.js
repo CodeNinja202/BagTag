@@ -3,8 +3,44 @@ import React, { useState } from 'react';
 const RankingTable = ({players, onRoundSubmit, onDeletePlayer, onEditPlayer}) => {
   // State to keep track of which player's name is being edited
   const [editingPlayer, setEditingPlayer] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+
+  const playerTagMatches = (tag, string) => {
+    const { name, bagTag   } = tag;
+    name.toLowerCase();
+   
+    if ((name.toLowerCase().includes(string)) || bagTag.toLowerCase().includes(string)) {
+        return tag;
+    }
+}
+const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
+const tagsToDisplay = searchTerm.length ? filteredTag : players;
 
   return (
+<div className='main-rankings-div'>
+
+<>
+                    <div className='containerSearchProducts'>
+                        <form
+                            className='searchForm'
+                            onSubmit={(event) => {
+                                event.preventDefault();
+                            }}>
+                            <div className='returnedFormContent'>
+                                <h3 className='searchHeader'>Search For Player Here</h3>
+                                <input
+                                    id="outlined-basic"
+                                    placeholder="(i.e. title,  description)"
+                                    className='userSearchInput'
+                                    type='text'
+                                    onChange={(event) => setSearchTerm(event.target.value)}
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </>
+
     <table>
       <thead>
         <tr>
@@ -14,7 +50,8 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer, onEditPlayer}) =>
         </tr>
       </thead>
       <tbody>
-        {players.map(player => (
+        
+        {tagsToDisplay.map(player => (
           <tr key={player.name}>
             {/* If a player's name is being edited, render the dropdown menu */}
             {editingPlayer === player.name ? (
@@ -46,6 +83,7 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer, onEditPlayer}) =>
         ))}
       </tbody>
     </table>
+    </div>
   );
 };
 
