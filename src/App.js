@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import RankingTable from "./components/Rankingtable";
-import { getAllTagPlayers } from "./components/api";
-
+import { getAllTagPlayers, deleteTagPlayer } from "./components/api";
+const baseURL = 'http://localhost:3001/api'
 
 const App = () => {
   const formRef = useRef(null);
@@ -51,38 +51,43 @@ const App = () => {
   const onAddPlayer = (event, formRef) => {
     event.preventDefault();
     const name = event.target.name.value;
-    const bagTag = parseInt(event.target.bagTag.value, 10); // parse bagTag as integer
-
-    // Check if the name or bagTag fields are empty
+    const bagTag = parseInt(event.target.bagTag.value, 10);
+  
     if (!name || !bagTag) {
-      // If either field is empty, display an error message and return early
       console.error("Name and bag tag fields cannot be empty");
       return;
     }
-
-    // Check if the player's name already exists in the list of players
+  
     if (players.some((player) => player.name === name)) {
       console.error(`Player with name '${name}' already exists`);
       return;
     }
-
+  
     try {
       const newPlayer = { name, bagTag };
-      const updatedPlayers = updateRankings(players, newPlayer, 0);
-      setPlayers(updatedPlayers);
-
-      // Reset the form after the player is added
-      formRef.current.reset();
+      fetch(`${baseURL}/bagtag`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPlayer),
+      })
+        .then((response) => response.json())
+        .then((player) => {
+          const updatedPlayers = updateRankings(players, player, 0);
+          setPlayers(updatedPlayers);
+          formRef.current.reset();
+        });
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   const onDeletePlayer = (player) => {
-    // Delete the player from the players array
-    const updatedPlayers = players.filter((p) => p.name !== player.name);
-    setPlayers(updatedPlayers);
-  };
+    deleteTagPlayer(player.id).then(() => {
+      // Remove the player from the state
+      setPlayers(players.filter(p => p.id !== player.id));
+    });
+  }
 
   const onEditPlayer = (event, player) => {
     event.preventDefault();
