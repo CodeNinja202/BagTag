@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const apiRouter = express.Router();
 
 //PRODUCTS ROUTE
-// const productsRouter = require('./bagtag');
-// apiRouter.use('/bagtag', productsRouter);
+const playersRouter = require('./bagtag');
+apiRouter.use('/bagtag', playersRouter);
 
 //USERS ROUTE
 // const usersRouter = require('./users');
