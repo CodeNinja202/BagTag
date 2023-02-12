@@ -2,14 +2,13 @@ const express = require('express');
 const tagsRouter = express.Router();
 
 const {
-  
+    updateBagTag,
     createNewStandings,
     getBagTagPlayerById,
     updateBagRanking,
     getAllBagTagRankings,
     deleteTag
 } = require('../db/bagtags');
-
 
 
 //GET ALL tagsRouter------------
@@ -54,7 +53,7 @@ tagsRouter.post('/',  async (req, res, next) => {
 //UDPATE tagsRouter
 tagsRouter.patch('/:tagID',  async (req, res, next) => {
   const { tagID } = req.params
-  const { name, bagTag } = req.body
+  const {  bagTag } = req.body
 
   try {
     const tag = await getBagTagPlayerById(tagID);
@@ -62,7 +61,6 @@ tagsRouter.patch('/:tagID',  async (req, res, next) => {
     if (tag) {
       const updatedTagRanking = await updateBagRanking(tagID, {
         id: tagID,
-        name: name,
         bagTag: bagTag
       });
 
@@ -79,6 +77,24 @@ tagsRouter.patch('/:tagID',  async (req, res, next) => {
     next(error);
   }
 });
+
+
+
+
+
+tagsRouter.put('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  const { bagTag } = req.body;
+
+  try {
+    const updatedPlayer = await updateBagTag(id, bagTag);
+    res.send(updatedPlayer);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 
 //DELETE tagsRouter
 tagsRouter.delete('/:tagID', async (req, res, next) => {
@@ -105,6 +121,8 @@ tagsRouter.delete('/:tagID', async (req, res, next) => {
   }
 
 })
+
+
 
 
 module.exports = tagsRouter;

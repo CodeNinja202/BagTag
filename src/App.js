@@ -96,22 +96,29 @@ const App = () => {
     });
   }
 
-  const onEditPlayer = (event, player) => {
+  const onEditPlayer = async (event, player) => {
     event.preventDefault();
-    const name = event.target.name.value; // new player name
-    const bagTag = player.bagTag; // keep the same bag tag
-    const updatedPlayer = { name, bagTag };
-
-    // Update the player's name and bag tag in the players array
-    const updatedPlayers = players.map((p) => {
-      if (p.name === player.name) {
-        return updatedPlayer;
-      }
-      return p;
-    });
-    setPlayers(updatedPlayers);
+    const { bagTag } = event.target;
+    try {
+      const response = await fetch(`/api/bagtags/${player.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bagTag: bagTag.value }),
+      });
+      const data = await response.json();
+      setEditingPlayer(null);
+      // Update the player data in the component's state
+      setPlayers(prevPlayers => prevPlayers.map(prevPlayer => (prevPlayer.id === data.id ? data : prevPlayer)));
+    } catch (error) {
+      console.error(error);
+    }
   };
-
+  
+  
+  
+  
 
   async function fetchAllTagPLayers() {
     const results = await getAllTagPlayers();
