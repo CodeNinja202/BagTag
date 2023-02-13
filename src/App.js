@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import RankingTable from "./components/Rankingtable";
+import EditPlayerForm from "./components/EditPlayerForm";
 import { getAllTagPlayers, deleteTagPlayer } from "./components/api";
 const baseURL = 'http://localhost:3001/api'
 
 const App = () => {
   const formRef = useRef(null);
   const [players, setPlayers] = useState([]);
+  const [editingPlayer, setEditingPlayer] = useState(null);
+
+
   const updateRankings = (players, player, bagTag) => {
     // Make a copy of the players array so we don't modify the original
     const updatedPlayers = [...players];
@@ -93,22 +97,33 @@ const App = () => {
     });
   }
 
-  const onEditPlayer = (event, player) => {
-    event.preventDefault();
-    const name = event.target.name.value; // new player name
-    const bagTag = player.bagTag; // keep the same bag tag
-    const updatedPlayer = { name, bagTag };
+  const onEditPlayer = async ({tagID}) => {
+   
+    
+    try {
+      const response = await fetch(`/api/bagtags/${tagID}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ bagTag: bagTag.value }),
+      });
 
-    // Update the player's name and bag tag in the players array
-    const updatedPlayers = players.map((p) => {
-      if (p.name === player.name) {
-        return updatedPlayer;
+      if (!response.ok) {
+        throw new Error('Unable to update player');
       }
-      return p;
-    });
-    setPlayers(updatedPlayers);
+
+      const data = await response.json();
+      setEditingPlayer(null);
+      setPlayers(prevPlayers => prevPlayers.map(prevPlayer => (prevPlayer.id === data.id ? data : prevPlayer)));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  
+  
+  
 
   async function fetchAllTagPLayers() {
     const results = await getAllTagPlayers();
@@ -117,12 +132,30 @@ const App = () => {
 
 
 
+
+//USE EFFECT START
   useEffect(() => {
     fetchAllTagPLayers();
   }, []);
 
   return (
     <div>
+
+<div>
+      {players.map(player => {
+        if (player.id === editingPlayer) {
+          return <EditPlayerForm player={player} onEditPlayer={onEditPlayer} />;
+        }
+
+        return (
+          <div key={player.id}>
+            {player.name} - Bag Tag: {player.bagTag}
+            <button onClick={() => setEditingPlayer(player.id)}>Edit</button>
+          </div>
+        );
+      })}
+    </div>
+
       <RankingTable
         players={players}
         fetchAllTagPLayers={fetchAllTagPLayers}
