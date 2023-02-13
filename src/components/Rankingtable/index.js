@@ -71,6 +71,7 @@ const tagsToDisplay = searchTerm.length ? filteredTag : players;
       ) : (
         <>
          
+          <td>{player.name}</td>
           <td>{player.bagTag}</td>
         </>
       )}
