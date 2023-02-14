@@ -62,7 +62,6 @@ tagsRouter.patch('/:tagID',  async (req, res, next) => {
     if (tag) {
       const updatedTagRanking = await updateBagRanking(tagID, {
         id: tagID,
-        
         bagTag: bagTag
       });
 

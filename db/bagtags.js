@@ -47,14 +47,11 @@ async function createNewStandings({name, bagTag}) {
   }
 }
 
-async function updateBagRanking( id, fields = {}) {
-
+async function updateBagRanking(id, fields = {}) {
   try {
     const setString = Object.keys(fields)
       .map((key, index) => `"${key}"=$${index + 1}`)
       .join(", ");
-
-    console.log("setstring: ", setString)
 
     if (setString.length > 0) {
       await client.query(
@@ -66,14 +63,14 @@ async function updateBagRanking( id, fields = {}) {
        `,
         Object.values(fields)
       );
-      
-      return await getBagTagPlayerById(id);
 
+      return await getBagTagPlayerById(id);
     }
   } catch (error) {
     throw error;
   }
 }
+
 
 async function deleteTag(id) {
 
@@ -92,8 +89,27 @@ async function deleteTag(id) {
     throw error;
   }
 }
+async function updateBagTag(id, bagTag) {
+  try {
+    await client.query(
+      `
+       UPDATE players
+       SET "bagTag"=$1
+       WHERE id=$2
+       RETURNING *;
+     `,
+      [bagTag, id]
+    );
+    
+    return await getBagTagPlayerById(id);
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 module.exports = {
+  updateBagTag,
   deleteTag,
   createNewStandings,
   getBagTagPlayerById,
