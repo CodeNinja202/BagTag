@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import RankingTable from "./components/Rankingtable";
-import { getAllTagPlayers, deleteTagPlayer, updateBagTag } from "./components/api";
+
+import EditPlayerForm from "./components/EditPlayerForm";
+import { getAllTagPlayers, deleteTagPlayer } from "./components/api";
+
 const baseURL = 'http://localhost:3001/api'
 
 const App = () => {
   const formRef = useRef(null);
   const [players, setPlayers] = useState([]);
- 
+  const [editingPlayer, setEditingPlayer] = useState(null);
 
 
   const updateRankings = (players, player, bagTag) => {
@@ -102,6 +105,10 @@ const App = () => {
 
 
 
+  
+  
+  
+
   async function fetchAllTagPLayers() {
     const results = await getAllTagPlayers();
     setPlayers(results);
@@ -117,6 +124,22 @@ const App = () => {
 
   return (
     <div>
+
+<div>
+      {players.map(player => {
+        if (player.id === editingPlayer) {
+          return <EditPlayerForm player={player} onEditPlayer={onEditPlayer} />;
+        }
+
+        return (
+          <div key={player.id}>
+            {player.name} - Bag Tag: {player.bagTag}
+            <button onClick={() => setEditingPlayer(player.id)}>Edit</button>
+          </div>
+        );
+      })}
+    </div>
+
       <RankingTable
         players={players}
         fetchAllTagPLayers={fetchAllTagPLayers}

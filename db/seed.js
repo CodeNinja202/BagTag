@@ -1,3 +1,5 @@
+
+//REQUIREMENTS//////////////////////////
 const { client } = require("./client");
 
 const {
@@ -14,7 +16,12 @@ const { deleteTag,
   getBagTagPlayerById,
   updateBagRanking,
   getAllBagTagRankings } = require("./bagtags");
-//DROP TABLE
+////////////////////////////////////////////////////////////////
+
+
+
+
+  //DROP TABLE into the database// STORES TO DATABASE
 async function dropTables() {
   try {
     console.log("Dropping Tables");
@@ -29,7 +36,10 @@ async function dropTables() {
     console.log("error dropping tables", ex);
   }
 }
-//CREATE TABLE
+/////////////////////////////////////
+
+
+//CREATE TABLE// STORES TO DATABASE
 async function createTables() {
   try {
     console.log("Creating Tables");
@@ -56,7 +66,10 @@ async function createTables() {
     console.log("error creating tables", ex);
   }
 }
-// CREATE INITIAL tag ranking board
+
+
+
+// CREATE INITIAL tag ranking board // STORES TO DATABASE
 async function createInitialTags() {
   try {
     console.log("Creating tags");
@@ -81,6 +94,9 @@ async function createInitialTags() {
   }
 }
 
+
+
+// CREAT USER FUNCTION / STORES TO DATABASE
 async function createInitialUsers() {
   console.log("Starting to create users...");
 
