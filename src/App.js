@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import RankingTable from "./components/Rankingtable";
-import EditPlayerForm from "./components/EditPlayerForm";
-import { getAllTagPlayers, deleteTagPlayer } from "./components/api";
+import { getAllTagPlayers, deleteTagPlayer, updateBagTag } from "./components/api";
 const baseURL = 'http://localhost:3001/api'
 
 const App = () => {
   const formRef = useRef(null);
   const [players, setPlayers] = useState([]);
-  const [editingPlayer, setEditingPlayer] = useState(null);
+ 
 
 
   const updateRankings = (players, player, bagTag) => {
@@ -44,13 +43,17 @@ const App = () => {
     return updatedPlayers;
   };
 
-  const onRoundSubmit = (event, player) => {
-    event.preventDefault();
-    const bagTag = event.target.bagTag.value; // access bagTag value from form
-
-    const updatedPlayers = updateRankings(players, player, bagTag);
+  const onRoundSubmit = async (event, player) => {
+    const newBagTag = parseInt(event.target.bagTag.value);
+    const updatedPlayer = {
+      ...player,
+      bagTag: newBagTag,
+    };
+    await updateBagTag(player.id, updatedPlayer);
+    const updatedPlayers = await fetchAllTagPLayers();
     setPlayers(updatedPlayers);
   };
+  
 
   const onAddPlayer = (event, formRef) => {
     event.preventDefault();
@@ -97,33 +100,7 @@ const App = () => {
     });
   }
 
-  const onEditPlayer = async ({tagID}) => {
-   
-    
-    try {
-      const response = await fetch(`/api/bagtags/${tagID}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ bagTag: bagTag.value }),
-      });
 
-      if (!response.ok) {
-        throw new Error('Unable to update player');
-      }
-
-      const data = await response.json();
-      setEditingPlayer(null);
-      setPlayers(prevPlayers => prevPlayers.map(prevPlayer => (prevPlayer.id === data.id ? data : prevPlayer)));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  
-  
-  
 
   async function fetchAllTagPLayers() {
     const results = await getAllTagPlayers();
@@ -140,28 +117,12 @@ const App = () => {
 
   return (
     <div>
-
-<div>
-      {players.map(player => {
-        if (player.id === editingPlayer) {
-          return <EditPlayerForm player={player} onEditPlayer={onEditPlayer} />;
-        }
-
-        return (
-          <div key={player.id}>
-            {player.name} - Bag Tag: {player.bagTag}
-            <button onClick={() => setEditingPlayer(player.id)}>Edit</button>
-          </div>
-        );
-      })}
-    </div>
-
       <RankingTable
         players={players}
         fetchAllTagPLayers={fetchAllTagPLayers}
         onRoundSubmit={onRoundSubmit}
         onDeletePlayer={onDeletePlayer}
-        onEditPlayer={onEditPlayer}
+ 
       />
       <form ref={formRef} onSubmit={(event) => onAddPlayer(event, formRef)}>
         <label htmlFor="name">Name:</label>
@@ -175,3 +136,4 @@ const App = () => {
 };
 
 export default App;
+

@@ -75,17 +75,17 @@ async function createInitialTags() {
     console.log("Creating tags");
     await createNewStandings({
       name: "User One",
-      bagTag: "1",
+      bagTag: 1,
     });
 
     await createNewStandings({
       name: "User Two",
-      bagTag: "2",
+      bagTag: 2,
     });
 
     await createNewStandings({
       name: "User Three",
-      bagTag: "3",
+      bagTag: 3,
     });
 
     console.log("Finished creating Tags",);

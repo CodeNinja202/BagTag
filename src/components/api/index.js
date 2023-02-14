@@ -51,3 +51,24 @@ export const getAllTagPlayers = async () => {
       throw ex;
     }
   }
+
+  export const updateBagTag = async (playerId, updatedPlayer) => {
+    try {
+      const response = await fetch(`${baseURL}/bagTag/${playerId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          bagTag: updatedPlayer.bagTag,
+        }),
+      });
+  
+      const results = await response.json();
+      console.log(results);
+      return results;
+    } catch (ex) {
+      console.log("error updating bagTag", ex);
+    }
+  };
+  
