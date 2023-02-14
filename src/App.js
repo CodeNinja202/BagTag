@@ -44,19 +44,14 @@ const App = () => {
   };
 
   const onRoundSubmit = async (event, player) => {
-    event.preventDefault();
     const newBagTag = parseInt(event.target.bagTag.value);
-  
     const updatedPlayer = {
       ...player,
       bagTag: newBagTag,
     };
-  
-    // Call the updateBagTag API with the player's ID and the new bag tag number
     await updateBagTag(player.id, updatedPlayer);
-  
-    // Fetch the updated player list
-    
+    const updatedPlayers = await fetchAllTagPLayers();
+    setPlayers(updatedPlayers);
   };
   
 
@@ -105,21 +100,6 @@ const App = () => {
     });
   }
 
-  const onEditPlayer = (event, player) => {
-    event.preventDefault();
-    const name = event.target.name.value; // new player name
-    const bagTag = player.bagTag; // keep the same bag tag
-    const updatedPlayer = { name, bagTag };
-
-    // Update the player's name and bag tag in the players array
-    const updatedPlayers = players.map((p) => {
-      if (p.name === player.name) {
-        return updatedPlayer;
-      }
-      return p;
-    });
-    setPlayers(updatedPlayers);
-  };
 
 
   async function fetchAllTagPLayers() {
@@ -142,7 +122,7 @@ const App = () => {
         fetchAllTagPLayers={fetchAllTagPLayers}
         onRoundSubmit={onRoundSubmit}
         onDeletePlayer={onDeletePlayer}
-        onEditPlayer={onEditPlayer}
+ 
       />
       <form ref={formRef} onSubmit={(event) => onAddPlayer(event, formRef)}>
         <label htmlFor="name">Name:</label>

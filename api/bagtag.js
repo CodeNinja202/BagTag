@@ -54,7 +54,7 @@ tagsRouter.post('/',  async (req, res, next) => {
 //UDPATE tagsRouter
 tagsRouter.patch('/:tagID',  async (req, res, next) => {
   const { tagID } = req.params
-  const { name, bagTag } = req.body
+  const {  bagTag } = req.body
 
   try {
     const tag = await getBagTagPlayerById(tagID);
@@ -62,7 +62,7 @@ tagsRouter.patch('/:tagID',  async (req, res, next) => {
     if (tag) {
       const updatedTagRanking = await updateBagRanking(tagID, {
         id: tagID,
-        name: name,
+        
         bagTag: bagTag
       });
 
