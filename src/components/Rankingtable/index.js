@@ -3,27 +3,26 @@ import React, { useState } from 'react';
 const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
   // State to keep track of which player's name is being edited
   const [editingPlayer, setEditingPlayer] = useState(null);
-//   const [searchTerm, setSearchTerm] = useState('');
-console.log(players)
+  const [searchTerm, setSearchTerm] = useState('');
 
-//   const playerTagMatches = (tag, searchTerm) => {
-//     const { name, bagTag } = tag;  
-//     const searchTerms = searchTerm.toLowerCase().split(" ");
+  const playerTagMatches = (tag, searchTerm) => {
+    const { name, bagTag } = tag;  
+    const searchTerms = searchTerm.toLowerCase().split(" ");
   
-//     if (
-//       searchTerms.every((term) => name.toLowerCase().includes(term)) ||
-//       searchTerms.every((term) => bagTag.toLowerCase().includes(term))
-//     ) {
-//       return tag;
-//     }
-//   };
-// const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
-// const tagsToDisplay = searchTerm.length ? filteredTag : players;
+    if (
+      searchTerms.every((term) => name.toLowerCase().includes(term)) ||
+      searchTerms.every((term) => bagTag.toLowerCase().includes(term))
+    ) {
+      return tag;
+    }
+  };
+const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
+const tagsToDisplay = searchTerm.length ? filteredTag : players;
 
   return (
 <div className='main-rankings-div'>
 
-{/* <>
+<>
                     <div className='containerSearchProducts'>
                         <form
                             className='searchForm'
@@ -42,7 +41,7 @@ console.log(players)
                             </div>
                         </form>
                     </div>
-                </> */}
+                </>
 
     <table>
       <thead>
@@ -54,7 +53,7 @@ console.log(players)
       </thead>
       <tbody>
         
-        {players.map(player => (
+        {tagsToDisplay.map(player => (
           
           <tr key={player.bagTag}>
             {/* If a player's name is being edited, render the dropdown menu */}
