@@ -45,11 +45,14 @@ async function createTables() {
     console.log("Creating Tables");
     // add code here
     await client.query(`
-      CREATE TABLE players (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255),
-        "bagTag" VARCHAR(255)
-      );
+    CREATE TABLE players (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255),
+      "bagTag" VARCHAR(255)
+    );
+    
+    CREATE INDEX bagTag_asc ON players ("bagTag" ASC);
+    
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,

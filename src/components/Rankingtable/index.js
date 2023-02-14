@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
+
+  
   // State to keep track of which player's name is being edited
   const [editingPlayer, setEditingPlayer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,9 +18,10 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
       return tag;
     }
   };
-const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
-const tagsToDisplay = searchTerm.length ? filteredTag : players;
-
+  const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
+  const sortedTags = filteredTag.sort((a, b) => a.bagTag - b.bagTag);
+  const tagsToDisplay = searchTerm.length ? sortedTags : players;
+  const sortedTagsToDisplay = tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag);
   return (
 <div className='main-rankings-div'>
 
@@ -53,7 +56,7 @@ const tagsToDisplay = searchTerm.length ? filteredTag : players;
       </thead>
       <tbody>
         
-        {tagsToDisplay.map(player => (
+        {sortedTagsToDisplay.map(player => (
           
           <tr key={player.bagTag}>
             {/* If a player's name is being edited, render the dropdown menu */}

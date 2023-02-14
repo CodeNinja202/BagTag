@@ -8,7 +8,7 @@ const App = () => {
   const [players, setPlayers] = useState([]);
  
 
-
+//update the ranking table//////////////////////////////////
   const updateRankings = (players, player, bagTag) => {
     // Make a copy of the players array so we don't modify the original
     const updatedPlayers = [...players];
@@ -43,8 +43,20 @@ const App = () => {
     return updatedPlayers;
   };
 
+
+
+
+//submit new bag tag to the server/////////////////////////
   const onRoundSubmit = async (event, player) => {
+  
     const newBagTag = parseInt(event.target.bagTag.value);
+
+     // Check if the new bagTag already exists in the list of players
+     if (players.some((player) => player.newBagTag === bagTag)) {
+      console.error(`Player with name '${newBagTag}' already exists`);
+      return;
+    }
+
     const updatedPlayer = {
       ...player,
       bagTag: newBagTag,
@@ -54,7 +66,11 @@ const App = () => {
     setPlayers(updatedPlayers);
   };
   
+////////////////////////////////////////////////////////
 
+
+
+// Adds new player/////////////////////////////////////
   const onAddPlayer = (event, formRef) => {
     event.preventDefault();
     const name = event.target.name.value;
@@ -92,7 +108,10 @@ const App = () => {
     }
   };
   
+////////////////////////////////////////////////////////////////
 
+
+// Deletes a player from the list of players///////////////////////
   const onDeletePlayer = (player) => {
     deleteTagPlayer(player.id).then(() => {
       // Remove the player from the state
@@ -100,12 +119,17 @@ const App = () => {
     });
   }
 
+////////////////////////////////////////////////////////////
 
 
+
+
+// Fetchs all players/////////////////////////////////////
   async function fetchAllTagPLayers() {
     const results = await getAllTagPlayers();
     setPlayers(results);
   }
+////////////////////////////////////////////////////////////
 
 
 
