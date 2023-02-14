@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import RankingTable from "./components/Rankingtable";
-import { getAllTagPlayers, deleteTagPlayer } from "./components/api";
+import { getAllTagPlayers, deleteTagPlayer, updateBagTag } from "./components/api";
 const baseURL = 'http://localhost:3001/api'
 
 const App = () => {
@@ -43,13 +43,22 @@ const App = () => {
     return updatedPlayers;
   };
 
-  const onRoundSubmit = (event, player) => {
+  const onRoundSubmit = async (event, player) => {
     event.preventDefault();
-    const bagTag = event.target.bagTag.value; // access bagTag value from form
-
-    const updatedPlayers = updateRankings(players, player, bagTag);
-    setPlayers(updatedPlayers);
+    const newBagTag = parseInt(event.target.bagTag.value);
+  
+    const updatedPlayer = {
+      ...player,
+      bagTag: newBagTag,
+    };
+  
+    // Call the updateBagTag API with the player's ID and the new bag tag number
+    await updateBagTag(player.id, updatedPlayer);
+  
+    // Fetch the updated player list
+    
   };
+  
 
   const onAddPlayer = (event, formRef) => {
     event.preventDefault();
