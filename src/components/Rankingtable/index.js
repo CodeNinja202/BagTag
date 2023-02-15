@@ -62,12 +62,14 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
             {/* If a player's name is being edited, render the dropdown menu */}
             {editingPlayer === player.bagTag ? (
               <td colSpan={2}>
-                {/* <form onSubmit={event => onEditPlayer(event, player)}>
-                  <label htmlFor="name">Name:</label>
-                  <input type="text" id="name" name="name" defaultValue={player.name} />
-                  <button type="submit">Save</button>
-                  <button type="button" onClick={() => setEditingPlayer(null)}>Cancel</button>
-                </form> */}
+                <form onSubmit={event => onRoundSubmit(event, player)}>
+                <label htmlFor="bagTag">Bag Tag:</label>
+                <input type="number" id="bagTag" name="bagTag" />
+                <input type="hidden" name="name" value={player.name} />
+                <button type="submit">Submit Round</button>
+                <button type="button" onClick={() => setEditingPlayer(null)}>Cancel</button>
+                <button onClick={() => onDeletePlayer(player)}>Delete</button>
+              </form>
               </td>
             ) : (
               <>
@@ -76,15 +78,10 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
               </>
             )}
             <td>
-              <form onSubmit={event => onRoundSubmit(event, player)}>
-                <label htmlFor="bagTag">Bag Tag:</label>
-                <input type="number" id="bagTag" name="bagTag" />
-                <input type="hidden" name="name" value={player.name} />
-                <button type="submit">Submit Round</button>
-              </form>
-              <button onClick={() => onDeletePlayer(player)}>Delete</button>
+             
+             
               {/* Toggle the editing player state when the edit button is clicked */}
-              {/* <button onClick={() => setEditingPlayer(player.name)}>Edit</button> */}
+              <button onClick={() => setEditingPlayer(player.bagTag)}>Edit</button>
             </td>
           </tr>
         ))}
