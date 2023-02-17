@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 
+
 const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
+
+  
   // State to keep track of which player's name is being edited
   const [editingPlayer, setEditingPlayer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+
+//Search term function, searchs all players on the leaderboard
   const playerTagMatches = (tag, searchTerm) => {
     const { name, bagTag } = tag;  
     const searchTerms = searchTerm.toLowerCase().split(" ");
@@ -16,13 +21,21 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
       return tag;
     }
   };
-const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
-const tagsToDisplay = searchTerm.length ? filteredTag : players;
 
+
+  //Filters all players and bag tags, returning all tags in accending order
+  const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
+  const sortedTags = filteredTag.sort((a, b) => a.bagTag - b.bagTag);
+  const tagsToDisplay = searchTerm.length ? sortedTags : players;
+  const sortedTagsToDisplay = tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag);
+ ////////////////////////////////////////////////////////////////////////////////
+
+  
+  
   return (
 <div className='main-rankings-div'>
-
-<>
+ 
+<div>
                     <div className='containerSearchProducts'>
                         <form
                             className='searchForm'
@@ -41,7 +54,7 @@ const tagsToDisplay = searchTerm.length ? filteredTag : players;
                             </div>
                         </form>
                     </div>
-                </>
+                </div>
 
     <table>
       <thead>
@@ -53,35 +66,32 @@ const tagsToDisplay = searchTerm.length ? filteredTag : players;
       </thead>
       <tbody>
         
-        {tagsToDisplay.map(player => (
+        {sortedTagsToDisplay.map(player => (
           
           <tr key={player.bagTag}>
             {/* If a player's name is being edited, render the dropdown menu */}
             {editingPlayer === player.bagTag ? (
               <td colSpan={2}>
-                {/* <form onSubmit={event => onEditPlayer(event, player)}>
-                  <label htmlFor="name">Name:</label>
-                  <input type="text" id="name" name="name" defaultValue={player.name} />
-                  <button type="submit">Save</button>
-                  <button type="button" onClick={() => setEditingPlayer(null)}>Cancel</button>
-                </form> */}
-              </td>
-            ) : (
-              <>
-                <td>{player.name}</td>
-                <td>{player.bagTag}</td>
-              </>
-            )}
-            <td>
-              <form onSubmit={event => onRoundSubmit(event, player)}>
+                <form onSubmit={event => onRoundSubmit(event, player)}>
                 <label htmlFor="bagTag">Bag Tag:</label>
                 <input type="number" id="bagTag" name="bagTag" />
                 <input type="hidden" name="name" value={player.name} />
                 <button type="submit">Submit Round</button>
+                <button type="button" onClick={() => setEditingPlayer(null)}>Cancel</button>
+                <button onClick={() => onDeletePlayer(player)}>Delete</button>
               </form>
-              <button onClick={() => onDeletePlayer(player)}>Delete</button>
+              </td>
+            ) : (
+              <div>
+                <td>{player.name}</td>
+                <td>{player.bagTag}</td>
+              </div>
+            )}
+            <td>
+             
+             
               {/* Toggle the editing player state when the edit button is clicked */}
-              {/* <button onClick={() => setEditingPlayer(player.name)}>Edit</button> */}
+              <button onClick={() => setEditingPlayer(player.bagTag)}>Edit</button>
             </td>
           </tr>
         ))}

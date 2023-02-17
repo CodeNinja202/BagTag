@@ -45,11 +45,14 @@ async function createTables() {
     console.log("Creating Tables");
     // add code here
     await client.query(`
-      CREATE TABLE players (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255),
-        "bagTag" VARCHAR(255)
-      );
+    CREATE TABLE players (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255),
+      "bagTag" VARCHAR(255)
+    );
+    
+    CREATE INDEX bagTag_asc ON players ("bagTag" ASC);
+    
 
       CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -150,10 +153,11 @@ async function createInitialUsers() {
         password: "glamgal123",
       },
     ];
+
+    
     const users = await Promise.all(
       usersToCreate.map(async (user) => {
         const result = await createUser(user);
-        // console.log(result)
         return result;
       })
     );
@@ -223,7 +227,7 @@ async function testDB() {
     throw error;
   }
 }
-//BUILD DB
+//BUILD DB////////////////////////////////
 async function buildDB() {
   try {
     // need to add something here

@@ -1,7 +1,7 @@
-const { client } = require('./client');
+const { client } = require('./client');// requires the client
 
 
-
+// gets all data from teh players data table
 async function getAllBagTagRankings() {
   try {
     console.log('DB Bag ADAPTER')
@@ -16,7 +16,11 @@ async function getAllBagTagRankings() {
     throw error;
   }
 }
+////////////////////////////////////////////////////////////////
 
+
+
+// Gets all players by ID
 async function getBagTagPlayerById(id) {
   try {
     const { rows: [tag] } = await client.query(`
@@ -30,8 +34,10 @@ async function getBagTagPlayerById(id) {
     throw error;
   }
 }
+////////////////////////////////////////////////////////////////
 
 
+// Creates a new player on the bag tag standings table
 async function createNewStandings({name, bagTag}) {
   try {
     const { rows: [product]} = await client.query(`
@@ -46,7 +52,10 @@ async function createNewStandings({name, bagTag}) {
     console.log('error in creating bagTag adapter function',ex)
   }
 }
+////////////////////////////////////////////////////////////////
 
+
+// Updates players info, name and bagtag number
 async function updateBagRanking(id, fields = {}) {
   try {
     const setString = Object.keys(fields)
@@ -70,8 +79,9 @@ async function updateBagRanking(id, fields = {}) {
     throw error;
   }
 }
+////////////////////////////////////////////////////////////////
 
-
+//Delete player from database
 async function deleteTag(id) {
 
   try {
@@ -89,6 +99,10 @@ async function deleteTag(id) {
     throw error;
   }
 }
+////////////////////////////////////////////////////////////////
+
+
+// updates a players bagtag number
 async function updateBagTag(id, bagTag) {
   try {
     await client.query(
@@ -107,7 +121,12 @@ async function updateBagTag(id, bagTag) {
   }
 }
 
+////////////////////////////////////////////////////////////////
 
+
+
+
+// Exports all functions 
 module.exports = {
   updateBagTag,
   deleteTag,

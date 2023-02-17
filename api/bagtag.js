@@ -1,18 +1,18 @@
-const express = require('express');
-const tagsRouter = express.Router();
+const express = require('express');//Requires express
+const tagsRouter = express.Router();//Router
 
+//requires all fucntions from Database functions
 const {
-  
     createNewStandings,
     getBagTagPlayerById,
     updateBagRanking,
     getAllBagTagRankings,
     deleteTag
 } = require('../db/bagtags');
+///////////////////////////////////////////////////
 
 
-
-//GET ALL tagsRouter------------
+//GET ALL tags/////////////////////////////
 tagsRouter.get("/", async (req, res, next) => {
   
   try {
@@ -24,7 +24,9 @@ tagsRouter.get("/", async (req, res, next) => {
       next(error);
   }
 });
-//GET tagsRouter BY ID
+///////////////////////////////////////////////////
+
+//GET gets a player BY ID
 tagsRouter.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -35,7 +37,10 @@ tagsRouter.get('/:id', async (req, res, next) => {
     next(error);
   }
 });
-//CREATE tagsRouter
+///////////////////////////////////////////////////
+
+
+//CREATE creates a new bag tag player
 tagsRouter.post('/',  async (req, res, next) => {
   const { name, bagTag } = req.body
 
@@ -51,9 +56,11 @@ tagsRouter.post('/',  async (req, res, next) => {
     next(error);
   }
 });
-//UDPATE tagsRouter
+///////////////////////////////////////////////////
+
+//UDPATE Bag tag number
 tagsRouter.patch('/:tagID',  async (req, res, next) => {
-  const { tagID } = req.params
+  const { tagID } = req.params 
   const {  bagTag } = req.body
 
   try {
@@ -78,8 +85,9 @@ tagsRouter.patch('/:tagID',  async (req, res, next) => {
     next(error);
   }
 });
+////////////////////////////////////////////////////////////////
 
-//DELETE tagsRouter
+//DELETE playerfrom the database
 tagsRouter.delete('/:tagID', async (req, res, next) => {
   const { tagID } = req.params;
 
@@ -104,6 +112,6 @@ tagsRouter.delete('/:tagID', async (req, res, next) => {
   }
 
 })
-
+///////////////////////////////////////////////
 
 module.exports = tagsRouter;

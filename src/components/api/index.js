@@ -1,6 +1,10 @@
 const baseURL = 'http://localhost:3001/api'
 
 
+//Fetch API Calls to the server
+
+
+//Gets all the players on the leaderboard
 export const getAllTagPlayers = async () => {
     try {
       const response = await fetch(`${baseURL}/bagtag`, {
@@ -16,7 +20,9 @@ export const getAllTagPlayers = async () => {
       throw ex;
     }
   }
+////////////////////////////////////////////////////////////////
 
+//Adds a new player to the leaderboard
   export const addPlayer = async (player) => {
     try {
       const response = await fetch(`${baseURL}/bagtag`, {
@@ -34,6 +40,9 @@ export const getAllTagPlayers = async () => {
       throw ex;
     }
   }
+  ////////////////////////////////////////////////////////////////
+
+  //Deletes a player from the leaderboard
 
   export const deleteTagPlayer = async (playerId) => {
     try {
@@ -51,7 +60,7 @@ export const getAllTagPlayers = async () => {
       throw ex;
     }
   }
-
+//Updates a players bagtag number on the leaderboard
   export const updateBagTag = async (playerId, updatedPlayer) => {
     try {
       const response = await fetch(`${baseURL}/bagTag/${playerId}`, {
