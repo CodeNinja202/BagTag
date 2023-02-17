@@ -112,7 +112,7 @@ const App = () => {
 
 
 // Deletes a player from the list of players///////////////////////
-  const onDeletePlayer = (player) => {
+  const onDeletePlayer = ( player) => {
     deleteTagPlayer(player.id).then(() => {
       // Remove the player from the state
       setPlayers(players.filter(p => p.id !== player.id));

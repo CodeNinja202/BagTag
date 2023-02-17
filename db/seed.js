@@ -153,10 +153,11 @@ async function createInitialUsers() {
         password: "glamgal123",
       },
     ];
+
+    
     const users = await Promise.all(
       usersToCreate.map(async (user) => {
         const result = await createUser(user);
-        // console.log(result)
         return result;
       })
     );
@@ -226,7 +227,7 @@ async function testDB() {
     throw error;
   }
 }
-//BUILD DB
+//BUILD DB////////////////////////////////
 async function buildDB() {
   try {
     // need to add something here

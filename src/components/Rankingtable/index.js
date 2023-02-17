@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
 
   
@@ -7,6 +8,8 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
   const [editingPlayer, setEditingPlayer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+
+//Search term function, searchs all players on the leaderboard
   const playerTagMatches = (tag, searchTerm) => {
     const { name, bagTag } = tag;  
     const searchTerms = searchTerm.toLowerCase().split(" ");
@@ -18,14 +21,21 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
       return tag;
     }
   };
+
+
+  //Filters all players and bag tags, returning all tags in accending order
   const filteredTag = players.filter(tag => playerTagMatches(tag, searchTerm));
   const sortedTags = filteredTag.sort((a, b) => a.bagTag - b.bagTag);
   const tagsToDisplay = searchTerm.length ? sortedTags : players;
   const sortedTagsToDisplay = tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag);
+ ////////////////////////////////////////////////////////////////////////////////
+
+  
+  
   return (
 <div className='main-rankings-div'>
-
-<>
+ 
+<div>
                     <div className='containerSearchProducts'>
                         <form
                             className='searchForm'
@@ -44,7 +54,7 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
                             </div>
                         </form>
                     </div>
-                </>
+                </div>
 
     <table>
       <thead>
@@ -72,10 +82,10 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
               </form>
               </td>
             ) : (
-              <>
+              <div>
                 <td>{player.name}</td>
                 <td>{player.bagTag}</td>
-              </>
+              </div>
             )}
             <td>
              
