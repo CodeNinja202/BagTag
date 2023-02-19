@@ -20,7 +20,11 @@ const Navbar = ({ logout, token, user, fetchAllTagPLayers}) => {
             <Link to="/" onClick={() => { logout(); }} className="navbarLink">Logout</Link>
 
           </>
-        ) : null}
+        ) : (
+          <Link to="/login" className="navbarLink">
+          Login
+        </Link>
+        )}
            
         
       </nav>

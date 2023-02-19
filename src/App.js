@@ -26,6 +26,28 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState(0);
   const navigate = useNavigate();
+
+
+
+  async function getMe() {
+    const storedToken = window.localStorage.getItem("token");
+    if (!token) {
+      if (storedToken) {
+        setToken(storedToken);
+      }
+      return;
+    }
+
+    const results = await getUserDetails(token);
+console.log(token)
+    if (results) {
+      setUser(results);
+      setUsername(results.username);
+      setUserId(results.id);
+    } else {
+      console.log("error getting user results in the getMe function");
+    }
+  }
   //update the ranking table//////////////////////////////////
   const updateRankings = (players, player, bagTag) => {
     // Make a copy of the players array so we don't modify the original
@@ -138,25 +160,7 @@ const App = () => {
   }
   ////////////////////////////////////////////////////////////
 
-  async function getMe() {
-    const storedToken = window.localStorage.getItem("token");
-    if (!token) {
-      if (storedToken) {
-        setToken(storedToken);
-      }
-      return;
-    }
 
-    const results = await getUserDetails(token);
-
-    if (results) {
-      setUser(results);
-      setUsername(results.username);
-      setUserId(results.id);
-    } else {
-      console.log("error getting user results in the getMe function");
-    }
-  }
 
   function logout() {
     window.localStorage.removeItem("token");
@@ -167,7 +171,7 @@ const App = () => {
 
   async function fetchAllUsers() {
     const results = await getAllUsers();
-    // console.log(results)
+   
     setUsers(results);
   }
 
@@ -200,7 +204,9 @@ const App = () => {
             <RankingTable
               token={token}
               user={user}
+              users={users}
               players={players}
+              fetchAllUsers={fetchAllUsers}
               fetchAllTagPLayers={fetchAllTagPLayers}
               onRoundSubmit={onRoundSubmit}
               onDeletePlayer={onDeletePlayer}

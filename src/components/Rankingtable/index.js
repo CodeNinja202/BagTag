@@ -8,19 +8,14 @@ const RankingTable = ({
   onRoundSubmit,
   onDeletePlayer,
   onAddPlayer,
-  user,
   token,
+  users,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingPlayer, setEditingPlayer] = useState(null);
+  const { isAdmin, id } = users
+  const [ display, setDisplay] = useState("none")
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
-
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
 
   //Search term function, searchs all players on the leaderboard
   const playerTagMatches = (tag, searchTerm) => {
@@ -46,7 +41,39 @@ const RankingTable = ({
 
   return (
     <div className="main-rankings-div">
-      <div className="containerSearchProducts">
+     
+     
+    {token ? (<Button  style={{marginBottom:"2%",color: "white",background: "red", width: "100%"}} onClick={(event)=>{
+              event.preventDefault()
+              if(display === "none"){
+                setDisplay('block')
+              }else{
+                setDisplay('none')
+              }
+            
+            }
+            }>Add New Player</Button>
+         ):null }
+      {/*Map through all tagged players in rankings table  */}
+      <div className="activity-box" style={{display:display}}>
+
+      {token ? (
+        <div>
+
+          
+          <form ref={formRef} onSubmit={(event) => onAddPlayer(event, formRef)}>
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" name="name" />
+            <label htmlFor="bagTag">Bag Tag:</label>
+            <input type="number" id="bagTag" name="bagTag" />
+            <Button type="submit">Add Player</Button>
+          </form>
+        </div>
+      ) : null}
+</div>
+
+
+<div className="containerSearchProducts">
         <form
           className="searchForm"
           onSubmit={(event) => {
@@ -66,29 +93,44 @@ const RankingTable = ({
         </form>
       </div>
       {/*//////////////////////////////////////////////////////////////// */}
-
-      {/*Map through all tagged players in rankings table  */}
       {sortedTagsToDisplay.map((player) => (
         <div className="submitTag-main-div" key={player.bagTag}>
           {token ? (
-            <div style={{margin:"20px"}}>
-              <form onSubmit={(event) => onRoundSubmit(event, player)}>
-                <Paper>
-                {player.name}
-                {player.bagTag}
+            <div style={{ margin: "20px" }}>
+              <Paper>
+                <form onSubmit={(event) => onRoundSubmit(event, player)}>
+                  {player.name}
+                  {player.bagTag}
+                  {editingPlayer === player.name ? (
+                    <div>
+                      <input type="number" id="bagTag" name="bagTag" />
+                      <input type="hidden" name="name" value={player.name} />
+                      <button type="submit">Submit Round</button>
+                     
+                      <button onClick={() => onDeletePlayer(player)}>
+                        Delete
+                      </button>
 
-                <input type="number" id="bagTag" name="bagTag" />
-                <input type="hidden" name="name" value={player.name} />
-                <button type="submit">Submit Round</button>
-                <button onClick={() => onDeletePlayer(player)}>Delete</button>
-                </Paper>
-              </form>
+                      <button
+                        type="button"
+                        onClick={() => setEditingPlayer(null)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : null}
+                </form>
+                <button onClick={(event) => 
+                  setEditingPlayer(player.name)}>
+                  Edit
+                </button>
+              </Paper>
             </div>
           ) : (
-             <div style={{margin:"20px"}}>
+            <div style={{ margin: "20px" }}>
               <Paper>
-              {player.name}
-              {player.bagTag}
+                {player.name}
+                {player.bagTag}
               </Paper>
             </div>
           )}
@@ -96,29 +138,9 @@ const RankingTable = ({
       ))}
       {/*//////////////////////////////////////////////////  */}
 
-      {!token ? (
-        <div>
-          <Link to="/login" className="navbarLink">
-            Login
-          </Link>
-        </div>
-      ) : (
-        <div>
-          <h1>Token</h1>
-        </div>
-      )}
+    
 
-      {token ? (
-        <div>
-          <form ref={formRef} onSubmit={(event) => onAddPlayer(event, formRef)}>
-            <label htmlFor="name">Name:</label>
-            <input type="text" id="name" name="name" />
-            <label htmlFor="bagTag">Bag Tag:</label>
-            <input type="number" id="bagTag" name="bagTag" />
-            <Button type="submit">Add Player</Button>
-          </form>
-        </div>
-      ) : null}
+
     </div>
   );
 };
