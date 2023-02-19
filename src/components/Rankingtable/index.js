@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,formRef} from 'react';
 
 
-const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
+const RankingTable = ({players, onRoundSubmit, onDeletePlayer, onAddPlayer}) => {
 
   
   // State to keep track of which player's name is being edited
@@ -35,7 +35,7 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
   return (
 <div className='main-rankings-div'>
  
-<div>
+
                     <div className='containerSearchProducts'>
                         <form
                             className='searchForm'
@@ -54,24 +54,17 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
                             </div>
                         </form>
                     </div>
-                </div>
+               
 
-    <table>
-      <thead>
-        <tr>
-          <th>Player</th>
-          <th>Bag Tag</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
+   
+    
         
         {sortedTagsToDisplay.map(player => (
           
-          <tr key={player.bagTag}>
+          <div className='submitTag-main-div' key={player.bagTag}>
             {/* If a player's name is being edited, render the dropdown menu */}
             {editingPlayer === player.bagTag ? (
-              <td colSpan={2}>
+              <div colSpan={5}>
                 <form onSubmit={event => onRoundSubmit(event, player)}>
                 <label htmlFor="bagTag">Bag Tag:</label>
                 <input type="number" id="bagTag" name="bagTag" />
@@ -80,23 +73,31 @@ const RankingTable = ({players, onRoundSubmit, onDeletePlayer,}) => {
                 <button type="button" onClick={() => setEditingPlayer(null)}>Cancel</button>
                 <button onClick={() => onDeletePlayer(player)}>Delete</button>
               </form>
-              </td>
+              </div>
             ) : (
               <div>
-                <td>{player.name}</td>
-                <td>{player.bagTag}</td>
+                {player.name}
+                {player.bagTag}
               </div>
             )}
-            <td>
+            
              
              
               {/* Toggle the editing player state when the edit button is clicked */}
               <button onClick={() => setEditingPlayer(player.bagTag)}>Edit</button>
-            </td>
-          </tr>
+            
+          </div>
         ))}
-      </tbody>
-    </table>
+    
+
+
+    <form ref={formRef} onSubmit={(event) => onAddPlayer(event, formRef)}>
+        <label htmlFor="name">Name:</label>
+        <input type="text" id="name" name="name" />
+        <label htmlFor="bagTag">Bag Tag:</label>
+        <input type="number" id="bagTag" name="bagTag" />
+        <button type="submit">Add Player</button>
+      </form>
     </div>
   );
 };
