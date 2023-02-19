@@ -1,8 +1,7 @@
 import React, { useState, formRef } from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import Popper from "@mui/material/Popper";
+import Paper from "@mui/material/Paper";
 
 const RankingTable = ({
   players,
@@ -47,7 +46,6 @@ const RankingTable = ({
 
   return (
     <div className="main-rankings-div">
-     
       <div className="containerSearchProducts">
         <form
           className="searchForm"
@@ -73,21 +71,25 @@ const RankingTable = ({
       {sortedTagsToDisplay.map((player) => (
         <div className="submitTag-main-div" key={player.bagTag}>
           {token ? (
-            <div colSpan={5}>
+            <div style={{margin:"20px"}}>
               <form onSubmit={(event) => onRoundSubmit(event, player)}>
+                <Paper>
                 {player.name}
                 {player.bagTag}
 
                 <input type="number" id="bagTag" name="bagTag" />
-                 <input type="hidden" name="name" value={player.name} />
+                <input type="hidden" name="name" value={player.name} />
                 <button type="submit">Submit Round</button>
                 <button onClick={() => onDeletePlayer(player)}>Delete</button>
+                </Paper>
               </form>
             </div>
           ) : (
-            <div>
+             <div style={{margin:"20px"}}>
+              <Paper>
               {player.name}
               {player.bagTag}
+              </Paper>
             </div>
           )}
         </div>
