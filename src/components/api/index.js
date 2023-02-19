@@ -69,7 +69,7 @@ export const loginUser = async (username, password) => {
   }
 
 //gets users stored to the database
-  export const getUserDetails = async (token) => {
+  export const getUserDetails = async (token,) => {
     // console.log('Testing Token in API: ', token)
       try {
         const response = await fetch(`${baseURL}/users/me`, {

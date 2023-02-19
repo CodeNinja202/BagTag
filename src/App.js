@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect, formRef } from "react";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import RankingTable from "./components/Rankingtable";
-import { Route, BrowserRouter, Routes, useNavigate } from "react-router-dom";
-
+import { Route, Routes, useNavigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import {
@@ -168,8 +172,14 @@ const App = () => {
   }
 
   //USE EFFECT START
+
   useEffect(() => {
     fetchAllUsers();
+   
+  }, []);
+
+  useEffect(() => {
+    
     fetchAllTagPLayers();
   }, []);
 
@@ -179,6 +189,10 @@ const App = () => {
 
   return (
     <div className="main-routes-div">
+
+<Navbar logout={logout} token={token} user={user} players={players}  fetchAllTagPLayers={fetchAllTagPLayers} />
+
+
       <Routes>
         <Route
           path="/"
