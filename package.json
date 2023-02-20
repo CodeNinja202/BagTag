@@ -6,7 +6,8 @@
   "scripts": {
     "start-react": "react-scripts start",
     "start":"node bin/seed.js server/server.js",
-    "build": "react-scripts build",
+    "build-watch":"webpack -w",
+    "build": "webpack",
     "start-server": "nodemon server.js",
     "seed:dev": "nodemon ./db/seed.js"
   },
