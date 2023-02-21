@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { loginUser } from "../api";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Paper } from "@mui/material";
 import "./index.css";
 
 const Login = ({ setToken, navigate }) => {
@@ -27,7 +27,9 @@ const Login = ({ setToken, navigate }) => {
   ////////////////////////////////////////////////////////////////
   return (
     <div className="login-main-div">
+        
       <div className={error ? "error" : "loginForm"}>
+        <h1 className="welcome">Welcome to Bag Tag</h1>
         <form
           className="loginTemplate"
           autoComplete="off"
@@ -37,8 +39,9 @@ const Login = ({ setToken, navigate }) => {
             setError(false);
           }}
         >
+            <div className="login-inner-div">
           <TextField
-            style={{ margin: ".25rem" }}
+            style={{ margin: ".25rem", width: "100%" }}
             label="Enter Username"
             name="username"
             type="text"
@@ -46,7 +49,7 @@ const Login = ({ setToken, navigate }) => {
           />
 
           <TextField
-            style={{ margin: ".25rem" }}
+            style={{ margin: ".25rem", width: "100%" }}
             label="Enter Password"
             name="password"
             type="password"
@@ -58,11 +61,11 @@ const Login = ({ setToken, navigate }) => {
             style={{
               borderRadius: 35,
               background: "black",
-              opacity: "70%",
-              color: "orange",
+              color: "white",
               borderColor: "black",
               height: "3rem",
               margin: ".25rem",
+              width: "100%",
             }}
             variant="contained"
             type="submit"
@@ -70,8 +73,11 @@ const Login = ({ setToken, navigate }) => {
             Login
           </Button>
           {/* <p className={error ? 'errorMessage2' : 'hidden'}>New here? <Link to='/register' id='sign-in-msg'>Create an account</Link></p> */}
+          </div>
+        
         </form>
       </div>
+     
     </div>
   );
 };

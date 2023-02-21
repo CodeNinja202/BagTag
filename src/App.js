@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect, formRef } from "react";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+
 import RankingTable from "./components/Rankingtable";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
