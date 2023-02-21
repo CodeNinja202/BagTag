@@ -40,10 +40,10 @@ const RankingTable = ({
   ////////////////////////////////////////////////////////////////////////////////
 
   return (
-    <div className="main-rankings-div">
+  <div className="main-rankings-div">
      
      
-    {token ? (<Button  style={{marginBottom:"2%",color: "white",background: "red", width: "100%"}} onClick={(event)=>{
+     {token ? (<Button  style={{marginBottom:"10%",color: "white",background: "black", width: "100%"}} onClick={(event)=>{
               event.preventDefault()
               if(display === "none"){
                 setDisplay('block')
@@ -57,7 +57,7 @@ const RankingTable = ({
       {/*Map through all tagged players in rankings table  */}
       <div className="activity-box" style={{display:display}}>
 
-      {token ? (
+        {token ? (
         <div>
 
           
@@ -70,10 +70,10 @@ const RankingTable = ({
           </form>
         </div>
       ) : null}
-</div>
+     </div>
 
 
-<div className="containerSearchProducts">
+      <div className="containerSearchProducts">
         <form
           className="searchForm"
           onSubmit={(event) => {
@@ -141,7 +141,7 @@ const RankingTable = ({
     
 
 
-    </div>
+  </div>
   );
 };
 
