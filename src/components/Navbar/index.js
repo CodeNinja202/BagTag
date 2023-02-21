@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LoginIcon from '@mui/icons-material/Login';
 
-
-
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = ({ logout, token, user, fetchAllTagPLayers}) => {
   const { id } = user;
@@ -17,12 +17,13 @@ const Navbar = ({ logout, token, user, fetchAllTagPLayers}) => {
         {token ? (
           <>    
    
-            <Link to="/" onClick={() => { logout(); }} className="navbarLink">Logout</Link>
+            <Link to="/" onClick={() => { logout(); }} className="navbarLink" style={{ textDecoration: "none", color:"black"   }}><LogoutIcon/></Link>
 
           </>
         ) : (
-          <Link to="/login" className="navbarLink">
-          Login
+          <Link to="/login" className="navbarLink" style={{ textDecoration: "none", color:"black"  }}>
+            <LoginIcon/>
+          
         </Link>
         )}
            

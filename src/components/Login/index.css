@@ -1,7 +1,13 @@
 
 @media (max-width:650px) {
+    .login-main-div{
+     text-align: center;
+    }
+    
+    
+    
     .loginTemplate {
-
+        
         display: flex;
         flex-direction: column;
         padding-top: 2%;
