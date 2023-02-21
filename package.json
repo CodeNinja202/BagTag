@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-react": "react-scripts start",
-    "start":"node bin/seed.js server/server.js",
-    "build-watch":"webpack -w",
-    "build": "webpack",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "start-server": "nodemon server.js",
     "seed:dev": "nodemon ./db/seed.js"
   },
@@ -15,11 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@fontsource/roboto": "^4.5.8",
-    "@mui/material": "^5.11.9",
-    "@mui/styled-engine-sc": "^5.11.9",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -32,9 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.5.0",
-    "react-scripts": "^5.0.1",
-    "styled-components": "^5.3.6",
-    "webpack": "^5.75.0"
+    "react-scripts": "^5.0.1"
   },
   "browserslist": {
     "production": [
