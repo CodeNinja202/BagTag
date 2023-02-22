@@ -83,6 +83,7 @@ console.log(token)
 
   //submit new bag tag to the server/////////////////////////
   const onRoundSubmit = async (event, player) => {
+   
     const newBagTag = parseInt(event.target.bagTag.value);
 
     // Check if the new bagTag already exists in the list of players
@@ -97,13 +98,16 @@ console.log(token)
     };
     await updateBagTag(player.id, updatedPlayer);
     const updatedPlayers = await fetchAllTagPLayers();
+  
     setPlayers(updatedPlayers);
+   
   };
 
   ////////////////////////////////////////////////////////
 
   // Adds new player/////////////////////////////////////
-  const onAddPlayer = (event, formRef) => {
+  const onAddPlayer = (event) => {
+    event.preventDefault();
     const name = event.target.name.value;
     const bagTag = parseInt(event.target.bagTag.value, 10);
 
@@ -132,7 +136,7 @@ console.log(token)
         .then((player) => {
           const updatedPlayers = updateRankings(players, player, 0);
           setPlayers(updatedPlayers);
-          formRef.current.reset();
+         
         });
     } catch (error) {
       console.error(error);

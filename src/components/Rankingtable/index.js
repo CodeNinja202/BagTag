@@ -17,13 +17,11 @@ const RankingTable = ({
   const [editingPlayer, setEditingPlayer] = useState(null);
   const { isAdmin, id } = users;
   const [display, setDisplay] = useState("none");
+ 
 
 
-  const playersWithIds = players.map((player, index) => ({
-    ...player,
-    id: index + 1 // add a unique id to each player object
-  }));
 
+ 
   //Search term function, searchs all players on the leaderboard
   const playerTagMatches = (tag, searchTerm) => {
     const { name, bagTag } = tag;
@@ -123,7 +121,7 @@ const RankingTable = ({
           {token ? (
             <div style={{ margin: "20px" }}>
               <Paper>
-                <form onSubmit={(event) => onRoundSubmit(event, player)}>
+                <form onSubmit={(event) =>  onRoundSubmit(event, player) }>
                   <div style={{ margin: "5px" }}>
                     Name: {player.name}
                     <br></br>
