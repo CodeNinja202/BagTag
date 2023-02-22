@@ -1,8 +1,7 @@
 import React, { useState, formRef } from "react";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-
+import { Button, TextField, Paper } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 const RankingTable = ({
   players,
   onRoundSubmit,
@@ -69,34 +68,43 @@ const RankingTable = ({
               onSubmit={(event) => onAddPlayer(event, formRef)}
             >
               <label htmlFor="name">Name:</label>
-              <input type="text" id="name" name="name" />
+              <TextField type="text" id="name" name="name" />
               <label htmlFor="bagTag">Bag Tag:</label>
-              <input type="number" id="bagTag" name="bagTag" />
+              <TextField type="number" id="bagTag" name="bagTag" />
               <Button type="submit">Add Player</Button>
             </form>
           </div>
         ) : null}
       </div>
-
-      <div className="containerSearchProducts">
-        <form
-          className="searchForm"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <div className="returnedFormContent">
-            <h3 className="searchHeader">Search For Player Here</h3>
-            <input
-              id="outlined-basic"
-              placeholder="(i.e. title,  description)"
-              className="userSearchInput"
-              type="text"
-              onChange={(event) => setSearchTerm(event.target.value)}
-            />
-          </div>
-        </form>
+      {/* Search fucntion, search all players on the ranking table */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="containerSearchProducts">
+          <form
+            className="searchForm"
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
+          >
+            <div className="returnedFormContent">
+              <h3 className="searchHeader">Search For Player Here</h3>
+              <input
+                id="outlined-basic"
+                placeholder="(i.e. name,  tag number)"
+                className="userSearchInput"
+                type="text"
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </div>
+          </form>
+        </div>
       </div>
+
       {/*//////////////////////////////////////////////////////////////// */}
       {sortedTagsToDisplay.map((player) => (
         <div className="submitTag-main-div" key={player.bagTag}>
@@ -111,27 +119,31 @@ const RankingTable = ({
                   </div>
                   {editingPlayer === player.name ? (
                     <div>
-                      <input type="number" id="bagTag" name="bagTag" />
+                      <input type="number" id="bagTag" name="bagTag"  min="1"/>
                       <input type="hidden" name="name" value={player.name} />
                       <button type="submit">Submit Round</button>
 
                       <button onClick={() => onDeletePlayer(player)}>
                         Delete
                       </button>
-
-                     
                     </div>
                   ) : null}
                 </form>
-                <button
+                <Button
+       style={{
+       
+        color: "black",
+       
+        
+      }}
                   onClick={(event) =>
                     setEditingPlayer(
                       editingPlayer === player.name ? null : player.name
                     )
                   }
                 >
-                  Edit
-                </button>
+                <EditIcon/>
+                </Button>
               </Paper>
             </div>
           ) : (
