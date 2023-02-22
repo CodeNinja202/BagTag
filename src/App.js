@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, formRef } from "react";
 
+import "./index.css";
 import RankingTable from "./components/Rankingtable";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -186,7 +187,7 @@ console.log(token)
 
   useEffect(() => {
     getMe();
-  }, [token]);
+  }, []);
 
   return (
     <div className="main-routes-div">
