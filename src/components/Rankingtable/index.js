@@ -1,8 +1,10 @@
 import React, { useState, formRef } from "react";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-
+import { Button, TextField, Paper } from "@mui/material";
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import EditIcon from '@mui/icons-material/Edit';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 const RankingTable = ({
   players,
   onRoundSubmit,
@@ -15,6 +17,12 @@ const RankingTable = ({
   const [editingPlayer, setEditingPlayer] = useState(null);
   const { isAdmin, id } = users;
   const [display, setDisplay] = useState("none");
+
+
+  const playersWithIds = players.map((player, index) => ({
+    ...player,
+    id: index + 1 // add a unique id to each player object
+  }));
 
   //Search term function, searchs all players on the leaderboard
   const playerTagMatches = (tag, searchTerm) => {
@@ -60,43 +68,55 @@ const RankingTable = ({
           Add New Player
         </Button>
       ) : null}
-      {/*Map through all tagged players in rankings table  */}
+
+      {/*  */}
+      {/*Map through all tagged players in rankings table/ add player button */}
       <div className="activity-box" style={{ display: display }}>
         {token ? (
-          <div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <form
               ref={formRef}
               onSubmit={(event) => onAddPlayer(event, formRef)}
             >
               <label htmlFor="name">Name:</label>
-              <input type="text" id="name" name="name" />
+             
+              <input type="text" id="name" name="name" required  />
               <label htmlFor="bagTag">Bag Tag:</label>
-              <input type="number" id="bagTag" name="bagTag" />
-              <Button type="submit">Add Player</Button>
+              <input type="number" id="bagTag" name="bagTag" min="1" required  />
+              <Button style={{color:"black"}} type="submit">< LibraryAddIcon/></Button>
             </form>
           </div>
         ) : null}
       </div>
-
-      <div className="containerSearchProducts">
-        <form
-          className="searchForm"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <div className="returnedFormContent">
-            <h3 className="searchHeader">Search For Player Here</h3>
-            <input
-              id="outlined-basic"
-              placeholder="(i.e. title,  description)"
-              className="userSearchInput"
-              type="text"
-              onChange={(event) => setSearchTerm(event.target.value)}
-            />
-          </div>
-        </form>
+      {/* Search fucntion, search all players on the ranking table */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="containerSearchProducts">
+          <form
+            className="searchForm"
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
+          >
+            <div className="returnedFormContent">
+              <h3 className="searchHeader">Search For Player</h3>
+              <input
+                id="outlined-basic"
+                placeholder="(i.e. name,  tag number)"
+                className="userSearchInput"
+                type="text"
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </div>
+          </form>
+        </div>
       </div>
+
       {/*//////////////////////////////////////////////////////////////// */}
       {sortedTagsToDisplay.map((player) => (
         <div className="submitTag-main-div" key={player.bagTag}>
@@ -111,27 +131,32 @@ const RankingTable = ({
                   </div>
                   {editingPlayer === player.name ? (
                     <div>
-                      <input type="number" id="bagTag" name="bagTag" />
-                      <input type="hidden" name="name" value={player.name} />
-                      <button type="submit">Submit Round</button>
+                       Tag#:
+                      <input type="number" id="bagTag" name="bagTag"  min="1" required />
+                      <input type="hidden" name="name" value={player.name} required />
+                      <Button style={{color:"black"}} type="submit"><AddCircleIcon/></Button>
 
-                      <button onClick={() => onDeletePlayer(player)}>
-                        Delete
-                      </button>
-
-                     
+                      <Button style={{color:"black"}} onClick={() => onDeletePlayer(player)}>
+                        <DeleteForeverIcon/>
+                      </Button>
                     </div>
                   ) : null}
                 </form>
-                <button
+                <Button
+       style={{
+       
+        color: "black",
+       
+        
+      }}
                   onClick={(event) =>
                     setEditingPlayer(
                       editingPlayer === player.name ? null : player.name
                     )
                   }
                 >
-                  Edit
-                </button>
+                <EditIcon/>
+                </Button>
               </Paper>
             </div>
           ) : (
