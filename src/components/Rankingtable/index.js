@@ -68,6 +68,8 @@ const RankingTable = ({
           Add New Player
         </Button>
       ) : null}
+
+      {/*  */}
       {/*Map through all tagged players in rankings table/ add player button */}
       <div className="activity-box" style={{ display: display }}>
         {token ? (
