@@ -105,11 +105,9 @@ const RankingTable = ({
               <Paper>
                 <form onSubmit={(event) => onRoundSubmit(event, player)}>
                   <div style={{ margin: "5px" }}>
-                    
-                      Name: {player.name}
-                      <br></br>
-                      Tag: {player.bagTag}
-                    
+                    Name: {player.name}
+                    <br></br>
+                    Tag: {player.bagTag}
                   </div>
                   {editingPlayer === player.name ? (
                     <div>
@@ -121,16 +119,17 @@ const RankingTable = ({
                         Delete
                       </button>
 
-                      <button
-                        type="button"
-                        onClick={() => setEditingPlayer(null)}
-                      >
-                        Cancel
-                      </button>
+                     
                     </div>
                   ) : null}
                 </form>
-                <button onClick={(event) => setEditingPlayer(player.name)}>
+                <button
+                  onClick={(event) =>
+                    setEditingPlayer(
+                      editingPlayer === player.name ? null : player.name
+                    )
+                  }
+                >
                   Edit
                 </button>
               </Paper>
