@@ -1,5 +1,5 @@
+//Imports
 import React, { useState, useRef, useEffect, formRef } from "react";
-
 import "./index.css";
 import RankingTable from "./components/Rankingtable";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import {
   getAllUsers,
   getUserDetails,
 } from "./components/api";
+////////////////////////////////////////////////////////////////
 const baseURL = "http://localhost:3001/api";
 
 const App = () => {
@@ -25,8 +26,7 @@ const App = () => {
   const [userId, setUserId] = useState(0);
   const navigate = useNavigate();
 
-
-
+  //checks if the user has a token or not in local storage
   async function getMe() {
     const storedToken = window.localStorage.getItem("token");
     if (!token) {
@@ -37,7 +37,7 @@ const App = () => {
     }
 
     const results = await getUserDetails(token);
-console.log(token)
+    console.log(token);
     if (results) {
       setUser(results);
       setUsername(results.username);
@@ -46,6 +46,8 @@ console.log(token)
       console.log("error getting user results in the getMe function");
     }
   }
+  ///////////////////////////////////////////////////////////////
+
   //update the ranking table//////////////////////////////////
   const updateRankings = (players, player, bagTag) => {
     // Make a copy of the players array so we don't modify the original
@@ -80,10 +82,10 @@ console.log(token)
 
     return updatedPlayers;
   };
+  ///////////////////////////////////////////////////////////////
 
-  //submit new bag tag to the server/////////////////////////
+  //submit new bag tag numer to a player stored to the server/////////////////////////
   const onRoundSubmit = async (event, player) => {
-   
     const newBagTag = parseInt(event.target.bagTag.value);
 
     // Check if the new bagTag already exists in the list of players
@@ -98,16 +100,14 @@ console.log(token)
     };
     await updateBagTag(player.id, updatedPlayer);
     const updatedPlayers = await fetchAllTagPLayers();
-  
+
     setPlayers(updatedPlayers);
-   
   };
 
   ////////////////////////////////////////////////////////
 
   // Adds new player/////////////////////////////////////
   const onAddPlayer = (event) => {
-    event.preventDefault();
     const name = event.target.name.value;
     const bagTag = parseInt(event.target.bagTag.value, 10);
 
@@ -136,7 +136,6 @@ console.log(token)
         .then((player) => {
           const updatedPlayers = updateRankings(players, player, 0);
           setPlayers(updatedPlayers);
-         
         });
     } catch (error) {
       console.error(error);
@@ -162,44 +161,47 @@ console.log(token)
   }
   ////////////////////////////////////////////////////////////
 
-
-
+  //Signs a user out of the site
   function logout() {
     window.localStorage.removeItem("token");
     setToken("");
     setUser({});
     navigate("/");
   }
+  ////////////////////////////////////////////////////////////
 
+  //Fetches all users stored to the database
   async function fetchAllUsers() {
     const results = await getAllUsers();
-   
+
     setUsers(results);
   }
+  ////////////////////////////////////////////////////////////
 
   //USE EFFECT START
 
   useEffect(() => {
-    fetchAllUsers();
-   
-  }, []);
-
-  useEffect(() => {
-    
     fetchAllTagPLayers();
-  }, []);
-
-  useEffect(() => {
+    fetchAllUsers();
     getMe();
   }, []);
+  //////////////////////////////////
 
   return (
     <div className="main-routes-div">
+      {/* Navbar component  */}
+      <Navbar
+        logout={logout}
+        token={token}
+        user={user}
+        players={players}
+        fetchAllTagPLayers={fetchAllTagPLayers}
+      />
+      {/* /////////////////////////////////////////// */}
 
-<Navbar logout={logout} token={token} user={user} players={players}  fetchAllTagPLayers={fetchAllTagPLayers} />
-
-
+      {/* Routes start */}
       <Routes>
+        {/*Directs users to the main bag tag table, displays all players and there bag tag ranking  */}
         <Route
           path="/"
           element={
@@ -217,18 +219,24 @@ console.log(token)
             />
           }
         />
+        {/* ///////////////////////////////////////// */}
 
+        {/* Login in component  */}
         <Route
           path="/login"
           element={<Login navigate={navigate} setToken={setToken} />}
         />
+        {/* ///////////////////////////////////////// */}
 
-        <Route
+        {/* Register in component  */}
+        {/* <Route
           path="/register"
           element={
             <Register token={token} navigate={navigate} setToken={setToken} />
           }
-        />
+        /> */}
+
+        {/* ///////////////////////////////////////// */}
       </Routes>
     </div>
   );

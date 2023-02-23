@@ -121,7 +121,7 @@ const RankingTable = ({
           {token ? (
             <div style={{ margin: "20px" }}>
               <Paper>
-                <form onSubmit={(event) =>  onRoundSubmit(event, player) }>
+                <form onSubmit={(event) =>  onRoundSubmit(event, player)}>
                   <div style={{ margin: "5px" }}>
                     Name: {player.name}
                     <br></br>
