@@ -146,7 +146,7 @@ const App = () => {
         .then((player) => {
           const updatedPlayers = updateRankings(players, player, 0);
           setPlayers(updatedPlayers);
-         
+          event.target.reset()
         });
     } catch (error) {
       console.error(error);
