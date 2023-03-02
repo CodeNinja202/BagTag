@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const { client } = require('./db/client');
-
+//
 client.connect();//Make sure to connect to client
 
 const server = express();
