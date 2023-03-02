@@ -77,7 +77,7 @@ const Login = ({ setToken, navigate }) => {
           >
             Login
           </Button>
-          {/* <p className={error ? 'errorMessage2' : 'hidden'}>New here? <Link to='/register' id='sign-in-msg'>Create an account</Link></p> */}
+          <p className={error ? 'errorMessage2' : 'hidden'}>New here? <Link to='/register' id='sign-in-msg'>Create an account</Link></p>
           </div>
         
         </form>

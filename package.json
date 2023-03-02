@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "start-server": "nodemon server.js",
-    "seed:dev": "nodemon ./db/seed.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "nodemon index.js",
+    "seed": "node ./db/seedData.js",
+    "seed:dev": "nodemon ./db/seedData.js",
+    "start-react": "react-scripts start",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
