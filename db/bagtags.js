@@ -1,5 +1,5 @@
 const { client } = require('./client');// requires the client
-
+//
 
 // gets all data from teh players data table
 async function getAllBagTagRankings() {
