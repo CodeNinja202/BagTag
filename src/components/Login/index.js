@@ -9,6 +9,9 @@ const Login = ({ setToken, navigate }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   ////////////////////////////////////////////////////////////////
+  
+  
+  //handled sumbit fucntion allows a user to login if a token is present
   const handleSubmit = async () => {
     const results = await loginUser(username, password);
    
@@ -25,6 +28,8 @@ const Login = ({ setToken, navigate }) => {
     }
   };
   ////////////////////////////////////////////////////////////////
+  
+  
   return (
     <div className="login-main-div">
         
