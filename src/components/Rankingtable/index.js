@@ -44,12 +44,13 @@ const RankingTable = ({
 
 
   //Filters all players and bag tags, 
-  const filteredTag = players.filter((tag) =>
+  const filteredTag = players ? players.filter((tag) =>
     playerTagMatches(tag, searchTerm)
-  );
+  ) : [];
+
   const sortedTags = filteredTag.sort((a, b) => a.bagTag - b.bagTag);
   const tagsToDisplay = searchTerm.length ? sortedTags : players;
-  const sortedTagsToDisplay = tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag);//returns the tags in accending order
+const sortedTagsToDisplay = tagsToDisplay ? tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag) : [];//returns the tags in accending order
   ////////////////////////////////////////////////////////////////////////////////
 
   return (
@@ -105,8 +106,8 @@ const RankingTable = ({
         <div className="containerSearchProducts">
           <form
             className="searchForm"
-            onSubmit={(event) => {
-              event.preventDefault();
+            onSubmit={() => {
+              
             }}
           >
             <div className="returnedFormContent">
@@ -129,7 +130,9 @@ const RankingTable = ({
           {token ? (
             <div style={{ margin: "20px" }}>
               <Paper>
-                <form onSubmit={(event) =>  onRoundSubmit(event, player)}>
+                <form onSubmit={(event) => {
+                  
+                  onRoundSubmit(event, player)}}>
                   <div style={{ margin: "5px" }}>
                     Name: {player.name}
                     <br></br>
@@ -155,7 +158,7 @@ const RankingTable = ({
        
         
       }}
-                  onClick={(event) =>
+                  onClick={() =>
                     setEditingPlayer(
                       editingPlayer === player.name ? null : player.name
                     )

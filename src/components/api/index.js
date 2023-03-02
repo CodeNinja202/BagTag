@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3001/api'
+const baseURL = 'https://bag-tag.onrender.com/api'
 
 
 //Fetch API Calls to the server
@@ -159,7 +159,7 @@ export const getAllTagPlayers = async () => {
       });
   
       const results = await response.json();
-      console.log(results);
+      
       return results;
     } catch (ex) {
       console.log("error updating bagTag", ex);
