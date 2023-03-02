@@ -1,3 +1,4 @@
+//Imports
 import React, { useState, formRef } from "react";
 import { Link } from "react-router-dom";
 import { Button, TextField, Paper } from "@mui/material";
@@ -5,6 +6,9 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+////////////////////////////////////////////////////////////////////
+
+//Ranking table fucntion component
 const RankingTable = ({
   players,
   onRoundSubmit,
@@ -13,11 +17,13 @@ const RankingTable = ({
   token,
   users,
 }) => {
+
+  //sets intial state
   const [searchTerm, setSearchTerm] = useState("");
   const [editingPlayer, setEditingPlayer] = useState(null);
   const { isAdmin, id } = users;
   const [display, setDisplay] = useState("none");
- 
+//////////////////////////////////////////////////////////////// 
 
 
 
@@ -34,14 +40,16 @@ const RankingTable = ({
       return tag;
     }
   };
+////////////////////////////////////////////////////////////////////////
 
-  //Filters all players and bag tags, returning all tags in accending order
+
+  //Filters all players and bag tags, 
   const filteredTag = players.filter((tag) =>
     playerTagMatches(tag, searchTerm)
   );
   const sortedTags = filteredTag.sort((a, b) => a.bagTag - b.bagTag);
   const tagsToDisplay = searchTerm.length ? sortedTags : players;
-  const sortedTagsToDisplay = tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag);
+  const sortedTagsToDisplay = tagsToDisplay.sort((a, b) => a.bagTag - b.bagTag);//returns the tags in accending order
   ////////////////////////////////////////////////////////////////////////////////
 
   return (
