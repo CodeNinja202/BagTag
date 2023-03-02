@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || 'https://localhost:5432/bagTag';
+const connectionString = `${process.env.DATABASE_URL}` || 'https://localhost:5432/bagTag';
 
 const client = new Client({
   connectionString,
