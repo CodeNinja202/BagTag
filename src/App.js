@@ -13,7 +13,7 @@ import {
   getAllUsers,
   getUserDetails,
 } from "./components/api";
-const baseURL = "http://localhost:3001/api";
+const baseURL = 'https://bag-tag.onrender.com/api';
 
 const App = () => {
   const formRef = useRef(null);
