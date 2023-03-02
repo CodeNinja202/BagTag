@@ -13,7 +13,7 @@ const Navbar = ({ logout, token, user, fetchAllTagPLayers}) => {
   return (
     <header>
       <nav className="navBox">
-      
+      {/* if a token is present allow user to edit ranking table, if no token is present users can only see the standings */}
         {token ? (
           <>    
    

@@ -8,20 +8,14 @@ const {
   getUser,
 } = require("../db/users");
 
-const { JWT_SECRET }  = process.env;
-const { requireUser } = require('./utils')
+const { JWT_SECRET }  = process.env; //contects the secret from .env file
+const { requireUser } = require('./utils')//requires the user to perform an action
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// router.get('/', async (req, res) => {
-//   const users = await getAllUsers();
 
-//   res.send({
-//     users
-//   });
-// });
-
+//endpoint that gets all users stored the to database
 router.get("/", async (req, res, next) => {
   try {
     const allUsers = await getAllUsers();
@@ -31,7 +25,9 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+//////////////////////////////////////////////////////
 
+//endpoint that allows users to login if they have a token
 router.post('/login', async (req, res, next) => {
   
   try {
@@ -44,10 +40,10 @@ router.post('/login', async (req, res, next) => {
       });
     }
     const user = await getUserByUsername(username);
-    console.log("TESTING USER______", user);
+   
     const hashedPassword = user.password;
     const isValid = await bcrypt.compare(password, hashedPassword);
-    console.log(process.env.JWT_SECRET)
+   //checks if the password matched with the hashpassword
     if (user && isValid) {
       const token = jwt.sign({ id: user.id, username }, process.env.JWT_SECRET);
 
@@ -64,7 +60,10 @@ router.post('/login', async (req, res, next) => {
     next(error);
   }
 });
+//////////////////////////////////////////////////////
 
+
+//endpoint that registers a users and attached a token to the user
 router.post('/register', async (req, res, next) => {
   const { username, password, email } = req.body;
 
@@ -99,16 +98,11 @@ router.post('/register', async (req, res, next) => {
     next(error)
   }
 });
+/////////////////////////////////////////////////////
 
-router.get('/me', requireUser, async (req, res, next) => {
-    const user = req.user;
-    console.log(user)
-    res.send(user);
-  
-    next();
-  
-});
 
+
+//endpoint that gets a users by their ID
 router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
