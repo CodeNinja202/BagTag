@@ -1,4 +1,4 @@
-const baseURL = 'https://bag-tag.onrender.com/api'
+const baseURL = 'http://localhost:3001/api'
 
 
 //Fetch API Calls to the server
