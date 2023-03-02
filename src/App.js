@@ -229,12 +229,12 @@ const App = () => {
         {/* ///////////////////////////////////////// */}
 
         {/* Register in component  */}
-        {/* <Route
+        <Route
           path="/register"
           element={
             <Register token={token} navigate={navigate} setToken={setToken} />
           }
-        /> */}
+        />
 
         {/* ///////////////////////////////////////// */}
       </Routes>
