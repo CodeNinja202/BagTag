@@ -16,7 +16,7 @@ import {
 const baseURL = 'https://bag-tag.onrender.com/api';
 
 const App = () => {
-  const formRef = useRef(null);
+
   const [players, setPlayers] = useState([]);
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
