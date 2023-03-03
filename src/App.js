@@ -5,7 +5,7 @@ import RankingTable from "./components/Rankingtable";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
-import Register from "./components/Register";
+// import Register from "./components/Register";
 import {
   getAllTagPlayers,
   deleteTagPlayer,
@@ -232,13 +232,13 @@ const App = () => {
           path="/login"
           element={<Login navigate={navigate} setToken={setToken} />}
         />
-
+{/* 
         <Route
           path="/register"
           element={
             <Register token={token} navigate={navigate} setToken={setToken} />
           }
-        />
+        /> */}
       </Routes>
     </div>
   );
