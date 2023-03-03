@@ -106,52 +106,12 @@ async function createInitialUsers() {
   try {
     const usersToCreate = [
       {
-        email: "matthew@email.com",
-        username: "matthew",
-        password: "password",
+        email: "rosskeene196@gmail.com",
+        username: "RossK2023",
+        password: "Homeboy2825269",
         isAdmin: true,
       },
-      {
-        email: "ross@email.com",
-        username: "ross",
-        password: "password",
-        isAdmin: true,
-      },
-      {
-        email: "claire@email.com",
-        username: "claire",
-        password: "password",
-        isAdmin: true,
-      },
-      {
-        email: "jaeln@email.com",
-        username: "jaeln",
-        password: "password",
-        isAdmin: true,
-      },
-      {
-        email: "ethan@email.com",
-        username: "ethan",
-        password: "password",
-        isAdmin: true,
-      },
-      {
-        email: "admin@email.com",
-        username: "admin",
-        password: "administrator123",
-        isAdmin: true,
-      },
-      { email: "default1@email.com", username: "albert", password: "bertie99" },
-      {
-        email: "default2@email.com",
-        username: "sandra",
-        password: "sandra123",
-      },
-      {
-        email: "default3@email.com",
-        username: "glamgal",
-        password: "glamgal123",
-      },
+  
     ];
 
     
