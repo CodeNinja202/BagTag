@@ -13,7 +13,7 @@ import {
   getAllUsers,
   getUserDetails,
 } from "./components/api";
-const baseURL = "http://localhost:3001/api";
+const baseURL = 'https://bag-tag.onrender.com/api';
 
 const App = () => {
   const formRef = useRef(null);
@@ -37,7 +37,7 @@ const App = () => {
     }
 
     const results = await getUserDetails(token);
-console.log(token)
+   console.log(token)
     if (results) {
       setUser(results);
       setUsername(results.username);
@@ -83,31 +83,41 @@ console.log(token)
 
   //submit new bag tag to the server/////////////////////////
   const onRoundSubmit = async (event, player) => {
-   
+    event.preventDefault();
     const newBagTag = parseInt(event.target.bagTag.value);
-
+  
     // Check if the new bagTag already exists in the list of players
     if (players.some((player) => player.newBagTag === bagTag)) {
       console.error(`Player with name '${newBagTag}' already exists`);
       return;
     }
-
+  
+    // Update the player object in the local state
+    const updatedPlayers = players.map((p) => {
+      if (p.id === player.id) {
+        return {
+          ...p,
+          bagTag: newBagTag,
+        };
+      }
+      return p;
+    });
+    setPlayers(updatedPlayers);
+  
+    // Update the player object in the database
     const updatedPlayer = {
       ...player,
       bagTag: newBagTag,
     };
     await updateBagTag(player.id, updatedPlayer);
-    const updatedPlayers = await fetchAllTagPLayers();
-  
-    setPlayers(updatedPlayers);
-   
   };
+  
 
   ////////////////////////////////////////////////////////
 
   // Adds new player/////////////////////////////////////
-  const onAddPlayer = (event) => {
-    event.preventDefault();
+  const onAddPlayer = async (event) => {
+   event.preventDefault();
     const name = event.target.name.value;
     const bagTag = parseInt(event.target.bagTag.value, 10);
 
@@ -136,7 +146,7 @@ console.log(token)
         .then((player) => {
           const updatedPlayers = updateRankings(players, player, 0);
           setPlayers(updatedPlayers);
-         
+          event.target.reset()
         });
     } catch (error) {
       console.error(error);

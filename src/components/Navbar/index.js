@@ -17,12 +17,12 @@ const Navbar = ({ logout, token, user, fetchAllTagPLayers}) => {
         {token ? (
           <>    
    
-            <Link to="/" onClick={() => { logout(); }} className="navbarLink" style={{ textDecoration: "none", color:"black"   }}><LogoutIcon/></Link>
+            <Link to="/" onClick={() => { logout(); }} className="navbarLink" style={{ textDecoration: "none", color:"black"   }}><LogoutIcon/> Logout</Link>
 
           </>
         ) : (
           <Link to="/login" className="navbarLink" style={{ textDecoration: "none", color:"black"  }}>
-            <LoginIcon/>
+            <LoginIcon/>Login
           
         </Link>
         )}
