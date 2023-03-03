@@ -186,15 +186,17 @@ const RankingTable = ({
                         required
                       />
                 
+                     
+
+                        <Button style={{ color: "black" }} type="submit">
+                        <AddCircleIcon />Update
+                      </Button>
+
                       <Button
                         style={{ color: "black" }}
                         onClick={() => onDeletePlayer(player)}
                       >
                         <DeleteForeverIcon />Delete
-                      </Button>
-
-                        <Button style={{ color: "black" }} type="submit">
-                        <AddCircleIcon />Update
                       </Button>
                     </div>
                   ) : null}
