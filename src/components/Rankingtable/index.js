@@ -1,5 +1,6 @@
 //Imports
-import React, { useState, formRef } from "react";
+import React, { useState, } from "react";
+
 import { Link } from "react-router-dom";
 import { Button, TextField, Paper } from "@mui/material";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
@@ -86,8 +87,8 @@ const RankingTable = ({
                   justifyContent: "center",
                   flexDirection: "column",
                 }}
-                ref={formRef}
-                onSubmit={(event) => onAddPlayer(event, formRef)}
+                
+                onSubmit={(event) => onAddPlayer(event)}
               >
                 <TextField
                   variant="filled"
