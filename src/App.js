@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, formRef } from "react";
+import React, { useState, useRef, useEffect,  } from "react";
 
 import "./index.css";
 import RankingTable from "./components/Rankingtable";
