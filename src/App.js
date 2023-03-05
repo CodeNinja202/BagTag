@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,  } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import "./index.css";
 import RankingTable from "./components/Rankingtable";
@@ -13,10 +13,10 @@ import {
   getAllUsers,
   getUserDetails,
 } from "./components/api";
-const baseURL = 'https://bag-tag.onrender.com/api';
+const baseURL = "http://localhost:3001/api";
 
 const App = () => {
-
+  const [isLoading, setIsLoading] = useState(true);
   const [players, setPlayers] = useState([]);
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
@@ -24,8 +24,6 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState(0);
   const navigate = useNavigate();
-
-
 
   async function getMe() {
     const storedToken = window.localStorage.getItem("token");
@@ -37,7 +35,7 @@ const App = () => {
     }
 
     const results = await getUserDetails(token);
-   console.log(token)
+    console.log(token);
     if (results) {
       setUser(results);
       setUsername(results.username);
@@ -85,13 +83,13 @@ const App = () => {
   const onRoundSubmit = async (event, player) => {
     event.preventDefault();
     const newBagTag = parseInt(event.target.bagTag.value);
-  
+
     // Check if the new bagTag already exists in the list of players
     if (players.some((player) => player.newBagTag === bagTag)) {
       console.error(`Player with name '${newBagTag}' already exists`);
       return;
     }
-  
+
     // Update the player object in the local state
     const updatedPlayers = players.map((p) => {
       if (p.id === player.id) {
@@ -103,7 +101,7 @@ const App = () => {
       return p;
     });
     setPlayers(updatedPlayers);
-  
+
     // Update the player object in the database
     const updatedPlayer = {
       ...player,
@@ -111,13 +109,12 @@ const App = () => {
     };
     await updateBagTag(player.id, updatedPlayer);
   };
-  
 
   ////////////////////////////////////////////////////////
 
   // Adds new player/////////////////////////////////////
   const onAddPlayer = async (event) => {
-   event.preventDefault();
+    event.preventDefault();
     const name = event.target.name.value;
     const bagTag = parseInt(event.target.bagTag.value, 10);
 
@@ -146,7 +143,7 @@ const App = () => {
         .then((player) => {
           const updatedPlayers = updateRankings(players, player, 0);
           setPlayers(updatedPlayers);
-          event.target.reset()
+          event.target.reset();
         });
     } catch (error) {
       console.error(error);
@@ -167,12 +164,12 @@ const App = () => {
 
   // Fetchs all players/////////////////////////////////////
   async function fetchAllTagPLayers() {
+    setIsLoading(true);
     const results = await getAllTagPlayers();
     setPlayers(results);
+    setIsLoading(false);
   }
   ////////////////////////////////////////////////////////////
-
-
 
   function logout() {
     window.localStorage.removeItem("token");
@@ -183,7 +180,7 @@ const App = () => {
 
   async function fetchAllUsers() {
     const results = await getAllUsers();
-   
+
     setUsers(results);
   }
 
@@ -191,11 +188,9 @@ const App = () => {
 
   useEffect(() => {
     fetchAllUsers();
-   
   }, []);
 
   useEffect(() => {
-    
     fetchAllTagPLayers();
   }, []);
 
@@ -205,41 +200,51 @@ const App = () => {
 
   return (
     <div className="main-routes-div">
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <Navbar
+            logout={logout}
+            token={token}
+            user={user}
+            players={players}
+            fetchAllTagPLayers={fetchAllTagPLayers}
+          />
 
-<Navbar logout={logout} token={token} user={user} players={players}  fetchAllTagPLayers={fetchAllTagPLayers} />
-
-
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <RankingTable
-              token={token}
-              user={user}
-              users={users}
-              players={players}
-              fetchAllUsers={fetchAllUsers}
-              fetchAllTagPLayers={fetchAllTagPLayers}
-              onRoundSubmit={onRoundSubmit}
-              onDeletePlayer={onDeletePlayer}
-              onAddPlayer={onAddPlayer}
-              logout={logout}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <RankingTable
+                  token={token}
+                  user={user}
+                  users={users}
+                  players={players}
+                  fetchAllUsers={fetchAllUsers}
+                  fetchAllTagPLayers={fetchAllTagPLayers}
+                  onRoundSubmit={onRoundSubmit}
+                  onDeletePlayer={onDeletePlayer}
+                  onAddPlayer={onAddPlayer}
+                  logout={logout}
+                />
+              }
             />
-          }
-        />
 
-        <Route
-          path="/login"
-          element={<Login navigate={navigate} setToken={setToken} />}
-        />
-{/* 
+            <Route
+              path="/login"
+              element={<Login navigate={navigate} setToken={setToken} />}
+            />
+            {/* 
         <Route
           path="/register"
           element={
             <Register token={token} navigate={navigate} setToken={setToken} />
           }
         /> */}
-      </Routes>
+          </Routes>
+        </>
+      )}
     </div>
   );
 };
