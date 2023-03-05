@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import CircularProgress from '@mui/material/CircularProgress';
 import "./index.css";
 import RankingTable from "./components/Rankingtable";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -200,11 +200,12 @@ const App = () => {
 
   return (
     <div className="main-routes-div">
+       
       {isLoading ? (
-        <div>Loading...</div>
+          <div className="loading"> <CircularProgress /></div>
       ) : (
         <>
-          <Navbar
+        <Navbar
             logout={logout}
             token={token}
             user={user}
