@@ -13,7 +13,7 @@ import {
   getAllUsers,
   getUserDetails,
 } from "./components/api";
-const baseURL = "https://bag-tag.onrender.com/api";
+const baseURL = "localhost:3001/api";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
