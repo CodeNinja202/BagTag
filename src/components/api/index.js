@@ -1,4 +1,4 @@
-const baseURL = 'localhost:3001/api'
+const baseURL = 'https://salty-wave-36392-49aa67c14bad.herokuapp.com/api'
 
 
 //Fetch API Calls to the server

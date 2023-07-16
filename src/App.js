@@ -13,7 +13,7 @@ import {
   getAllUsers,
   getUserDetails,
 } from "./components/api";
-const baseURL = "localhost:3001/api";
+const baseURL = 'https://salty-wave-36392-49aa67c14bad.herokuapp.com/api';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
